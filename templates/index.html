@@ -59,14 +59,14 @@
                             </div>
                             <div class="col-md-2">
                                 
-                            <a href="{% url 'edit_workshop' workshop_event.id %}" class="btn btn-primary">Edit</a>
+                            <!-- <a href="{% url 'edit_workshop' workshop_event.id %}" class="btn btn-primary">Edit</a> -->
                             <div class="dropdown text-right">
                                 <i class=" toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="icon"><h4>...</h4></span>
                                 </i>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" href="{% url 'edit_workshop' workshop_event.id %}">Edit</a>
-                                    <a class="dropdown-item" href="{% url 'delete_conference' conference_event.id %}" onclick="confirmDelete()">Delete</a>
+                                    <a class="dropdown-item" href="{% url 'delete_workshop' workshop_event.id %}" onclick="confirmDelete()">Delete</a>
                                     
                                 </div>
                             </div>
@@ -100,6 +100,16 @@
                             <div class="col-md-2">
                                 
                             <a href="{% url 'edit_social_event' social_event.id %}" class="btn btn-primary">Edit</a>
+                            <div class="dropdown text-right">
+                                <i class=" toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="icon"><h4>...</h4></span>
+                                </i>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="{% url 'edit_social_event' social_event.id %}">Edit</a>
+                                    <a class="dropdown-item" href="{% url 'delete_social_event' social_event.id %}" onclick="confirmDelete()">Delete</a>
+                                    
+                                </div>
+                            </div>
                         </div>
                         </div>
                         <hr>

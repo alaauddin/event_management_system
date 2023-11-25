@@ -93,6 +93,12 @@ def edit_workshop(request, pk):
     return render(request, 'edit_workshop.html', {'form': form})
 
 
+def delete_workshop(request, pk):
+    workshop = get_object_or_404(Conference, pk=pk)
+    workshop.delete()
+    return redirect('events_list')
+
+
 
 def create_social_event(request):
     if request.method == 'POST':
@@ -121,4 +127,11 @@ def edit_social_event(request, pk):
         form = SocialEventForm(instance=social_event)
 
     return render(request, 'edit_social_event.html', {'form': form})
+
+
+def delete_social_event(request, pk):
+    social_event = get_object_or_404(Conference, pk=pk)
+    social_event.delete()
+    return redirect('events_list')
+
 
