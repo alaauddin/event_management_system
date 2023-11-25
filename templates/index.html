@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">Events List</h1>
+    <hr>
+    <div class="row">
+
+        <!-- Conferences -->
+        <div class="col-md-4">
+            <h2>Conferences</h2>
+            <a href="{% url 'create_conference' %}" class="btn btn-primary mb-2">Create Conference</a>
+            {% for conference_event in conference %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <h6 class="card-title">{{ conference_event.tenant }}</h6>
+                            </div>
+                            <div class="col-md-2">
+                                
+                            <!-- <a href="{% url 'edit_conference' conference_event.id %}" class="btn btn-primary">Edit</a> -->
+                            <div class="dropdown text-right">
+                                <i class=" toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="icon"><h4>...</h4></span>
+                                </i>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="{% url 'edit_conference' conference_event.id %}">Edit</a>
+                                    <a class="dropdown-item" href="{% url 'delete_conference' conference_event.id %}" onclick="confirmDelete()">Delete</a>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <hr>
+                        <h5 class="card-title">{{ conference_event.title }}</h5>
+                        <p class="card-text">{{ conference_event.display_event_details }}</p>
+                        <p class="card-text">Theme: {{ conference_event.theme }}</p>
+                        <p class="card-text">Date: {{ conference_event.date }}</p>
+                        <p class="card-text">Location: {{ conference_event.location }}</p>
+                        <p class="card-text">Status: {{ conference_event.status }}</p>
+                        
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Workshops -->
+        <div class="col-md-4">
+            <h2>Workshops</h2>
+            <a href="{% url 'create_workshop' %}" class="btn btn-primary mb-2">Create Workshop</a>
+            {% for workshop_event in workshop %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h6 class="card-title">{{ workshop_event.tenant }}</h6>
+                            </div>
+                            <div class="col-md-2">
+                                
+                            <a href="{% url 'edit_workshop' workshop_event.id %}" class="btn btn-primary">Edit</a>
+                            <div class="dropdown text-right">
+                                <i class=" toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="icon"><h4>...</h4></span>
+                                </i>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="{% url 'edit_workshop' workshop_event.id %}">Edit</a>
+                                    <a class="dropdown-item" href="{% url 'delete_conference' conference_event.id %}" onclick="confirmDelete()">Delete</a>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <hr>
+                        <h5 class="card-title">{{ workshop_event.title }}</h5>
+                        <p class="card-text">{{ workshop_event.display_event_details }}</p>
+                        <p class="card-text">Topic: {{ workshop_event.topic }}</p>
+
+                        <!-- Add additional workshop details as needed -->
+                        <p class="card-text">Date: {{ workshop_event.date }}</p>
+                        <p class="card-text">Location: {{ workshop_event.location }}</p>
+                        <p class="card-text">Status: {{ workshop_event.status }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Social Events -->
+        <div class="col-md-4">
+            <h2>Social Events</h2>
+            <a href="{% url 'create_social_event' %}" class="btn btn-primary mb-2">Create Social Event</a>
+            {% for social_event in social_event %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h6 class="card-title">{{ social_event.tenant }}</h6>
+                            </div>
+                            <div class="col-md-2">
+                                
+                            <a href="{% url 'edit_social_event' social_event.id %}" class="btn btn-primary">Edit</a>
+                        </div>
+                        </div>
+                        <hr>
+                        <h5 class="card-title">{{ social_event.title }}</h5>
+                        <p class="card-text">{{ social_event.display_event_details }}</p>
+                        <p class="card-text">Activities: {{ social_event.activities }}</p>
+                        <p class="card-text">Date: {{ social_event.date }}</p>
+                        <p class="card-text">Location: {{ social_event.location }}</p>
+                        <p class="card-text">Status: {{ social_event.status }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+<script>
+    function confirmDelete() {
+        var result = confirm("Are you sure you want to delete?");
+        if (result) {
+            // User clicked "OK", perform the deletion
+            // Add your delete logic here
+            alert("Deleted!"); // Placeholder for actual deletion logic
+        } else {
+            // User clicked "Cancel", do nothing
+            alert("Deletion canceled.");
+        }
+    }
+</script>
+{% endblock %}
