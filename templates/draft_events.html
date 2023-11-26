@@ -1,0 +1,77 @@
+{%extends 'base.html'%}
+
+{%block title%} Create New Topic {%endblock%}
+
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Upcoming Draft Events</h2>
+    <hr>
+
+    {% if events %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Price</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                    <tr>
+                        <td>{{ event.title }}</td>
+                        <td>{{ event.date }}</td>
+                        <td>YE {{ event.price }}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#eventModal{{ event.id }}">
+                                View Details
+                            </button>
+                        </td>
+                    </tr>
+
+                    <!-- Modal for event details -->
+                    <div class="modal fade" id="eventModal{{ event.id }}" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="eventModalLabel">{{ event.title }} Details</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>{{ event.display_event_details }}</p>
+                                    <p>Date: {{ event.date }}</p>
+                                    <p>Location: {{ event.location }}</p>
+                                    <p>Created by: {{ event.create_by.username }}</p>
+                                    <p>Status: {{ event.status }}</p>
+                                    <p>Discount: ${{ event.discout }}</p>
+                                    <p>Price: ${{ event.price }}</p>
+                                    <p>{{event.get_event_type}}</p>
+                    
+                                    {% if event.get_event_type == "Conference" %}
+                                        <p>Theme: {{ event.theme }}</p>
+                                    {% elif event.get_event_type == "Workshop" %}
+                                        <p>Topic: {{ event.topic }}</p>
+                                    {% elif event.get_event_type == "SocialEvent" %}
+                                        <p>Activities: {{ event.activities }}</p>
+                                    {% endif %}
+                                    <!-- Add more details based on your model fields -->
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No upcoming draft events.</p>
+    {% endif %}
+</div>
+{% endblock %}

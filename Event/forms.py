@@ -1,5 +1,7 @@
 from django import forms
 from .models import *
+from django.contrib.auth.forms import UserCreationForm
+
 
 
 
@@ -19,4 +21,9 @@ class SocialEventForm(forms.ModelForm):
         fields = ['tenant','title', 'location', 'description', 'discout','activities']
 
 
-        
+
+
+class SignUpForm (UserCreationForm):
+    class Meta:
+        model=User
+        fields = {'username','email','password1', 'password2'}

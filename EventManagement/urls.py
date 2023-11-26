@@ -19,10 +19,16 @@ from django.urls import path
 from Event import views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.events_list, name='events_list'),
+    path("signup/",views.signup, name ='signup'),
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'),name='login'),
+    path('logout/',auth_views.LogoutView.as_view(), name='logout'),
+
     path('create_conference/', views.create_conference, name='create_conference'),
     path('edit_conference/<int:pk>/', views.edit_conference, name='edit_conference'),
     path('delete_conference/<int:pk>/', views.delete_conference, name='delete_conference'),
@@ -32,4 +38,8 @@ urlpatterns = [
     path('create_social_event/', views.create_social_event, name='create_social_event'),
     path('edit_social_event/<int:pk>/', views.edit_social_event, name='edit_social_event'),
     path('delete_social_event/<int:pk>/', views.delete_social_event, name='delete_social_event'),
+
+    path('draft_event/', views.draft_event, name= "draft_event"),
+
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

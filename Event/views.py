@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect, get_list_or_404
 from .models import *
-from .forms import ConferenceForm, WorkshopForm, SocialEventForm
+from .forms import ConferenceForm, WorkshopForm, SocialEventForm, SignUpForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login as auth_login
+
 # Create your views here.
 
 
@@ -19,6 +21,20 @@ def events_list(request):
 
 
     return render(request, 'index.html', context)
+
+
+
+def signup(request):
+    form = SignUpForm()
+    if request.method == "POST":
+        
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            auth_login(request,user)
+            return redirect('index')
+          
+    return render(request, 'signup.html', {'form':form})
 
 
 
@@ -68,6 +84,7 @@ def create_workshop(request):
         if form.is_valid():
             workshop = form.save(commit=False)  # Don't save to the database yet
             workshop.create_by = request.user
+            workshop.set_price()
             workshop = form.save()
             # Perform any additional logic or redirect to another page
             return redirect('events_list')
@@ -94,7 +111,7 @@ def edit_workshop(request, pk):
 
 
 def delete_workshop(request, pk):
-    workshop = get_object_or_404(Conference, pk=pk)
+    workshop = get_object_or_404(Workshop, pk=pk)
     workshop.delete()
     return redirect('events_list')
 
@@ -106,6 +123,7 @@ def create_social_event(request):
         if form.is_valid():
             social_event = form.save(commit=False)
             social_event.create_by = request.user
+            social_event.set_price()
             social_event = form.save()
             # Perform any additional logic or redirect to another page
             return redirect('events_list')
@@ -130,8 +148,18 @@ def edit_social_event(request, pk):
 
 
 def delete_social_event(request, pk):
-    social_event = get_object_or_404(Conference, pk=pk)
+    social_event = get_object_or_404(SocialEvent, pk=pk)
     social_event.delete()
     return redirect('events_list')
+
+
+
+def draft_event(request):
+    events = get_list_or_404(Event, status="draft")
+    context = {'events': events}
+    return render(request, 'draft_events.html', context)
+    
+
+
 
 
