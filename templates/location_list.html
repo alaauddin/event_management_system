@@ -1,0 +1,55 @@
+<!-- location_list.html -->
+{% extends 'base.html' %}
+
+{% block title %} Location List {% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Location List</h2>
+    <hr>
+
+    {% if locations %}
+        <div class="row">
+            {% for location in locations %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ location.name }}</h5>
+                            <p class="card-text">Capacity: {{ location.capacity }}</p>
+                            <p class="card-text">Price: ${{ location.price }}</p>
+                        </div>
+                        <div class="card-footer">
+                            
+                            <div class="row ">
+                                <div class="col-6 text-center">
+                                    <a href="{% url 'edit_location' location.id %}" class="btn btn-secondary btn-sm">Edit</a>
+                                </div>
+                                <div class="col-6 text-center">
+                                    <a href="{% url 'delete_location' location.id %}" class="btn btn-danger btn-sm" onclick="confirmDelete()">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            No locations found.
+        </div>
+    {% endif %}
+</div>
+<script>
+    function confirmDelete() {
+        var result = confirm("Are you sure you want to delete?");
+        if (result) {
+            // User clicked "OK", perform the deletion
+            // Add your delete logic here
+            alert("Deleted!"); // Placeholder for actual deletion logic
+        } else {
+            // User clicked "Cancel", do nothing
+            alert("Deletion canceled.");
+        }
+    }
+</script>
+{% endblock %}

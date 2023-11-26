@@ -5,6 +5,31 @@
 <div class="container mt-5">
     <h1 class="text-center">Events List</h1>
     <hr>
+    <form method="get" class="mb-4">
+        <div class="row g-3 align-items-end">
+            <div class="col-md-3">
+                <label for="id_date_from" class="form-label visually-hidden">Date From:</label>
+                <input type="date" name="date_from" id="id_date_from" class="form-control" placeholder="Date From" value="{{ date_from }}">
+            </div>
+            <div class="col-md-3">
+                <label for="id_date_to" class="form-label visually-hidden">Date To:</label>
+                <input type="date" name="date_to" id="id_date_to" class="form-control" placeholder="Date To" value="{{ date_to }}">
+            </div>
+            <div class="col-md-3">
+                <label for="id_status" class="form-label visually-hidden">Status:</label>
+                <select name="status" id="id_status" class="form-select" aria-label="Status">
+                    <option value="" {% if status == '' %}selected{% endif %}>Select Status</option>
+                    {% for choice in status_choices %}
+                        <option value="{{ choice.0 }}" {% if status == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary">Apply Filter</button>
+            </div>
+        </div>
+    </form>
+    <hr>
     <div class="row">
 
         <!-- Conferences -->

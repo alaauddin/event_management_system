@@ -25,10 +25,14 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.events_list, name='events_list'),
+
+    #auth
     path("signup/",views.signup, name ='signup'),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'),name='login'),
     path('logout/',auth_views.LogoutView.as_view(), name='logout'),
 
+
+    #oprations
     path('create_conference/', views.create_conference, name='create_conference'),
     path('edit_conference/<int:pk>/', views.edit_conference, name='edit_conference'),
     path('delete_conference/<int:pk>/', views.delete_conference, name='delete_conference'),
@@ -38,8 +42,17 @@ urlpatterns = [
     path('create_social_event/', views.create_social_event, name='create_social_event'),
     path('edit_social_event/<int:pk>/', views.edit_social_event, name='edit_social_event'),
     path('delete_social_event/<int:pk>/', views.delete_social_event, name='delete_social_event'),
+    path('locations/', views.location_list, name='location_list'),
+    path('edit_location/<int:location_id>/', views.edit_location, name="edit_location"),
+    path('delete_location/<int:location_id>/', views.delete_location, name = "delete_location"),
 
+
+
+    #queries
     path('draft_event/', views.draft_event, name= "draft_event"),
+    path('completed_events/', views.completed_events, name = "completed_events"), 
+    path('cancelled_events/', views.cancelled_events, name="cancelled_events"),
+    path('create_location/', views.create_location, name = "create_location"),
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -49,10 +49,12 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
                   <a class="dropdown-item" href="{% url 'draft_event' %}">show upcoming events</a>
-                  <a class="dropdown-item" href="#">Show complated events</a>
-                  <a class="dropdown-item" href="#">Show cancelled events</a>
+                  <a class="dropdown-item" href="{% url 'completed_events' %}">Show complated events</a>
+                  <a class="dropdown-item" href="{% url 'cancelled_events' %}">Show cancelled events</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Create New Venu</a>
+                  <a class="dropdown-item" href="{% url 'location_list' %}">View Venus</a>
+                  <a class="dropdown-item" href="{% url 'create_location' %}">Create New Venu</a>
+                  
                   
                 </div>
               </li>

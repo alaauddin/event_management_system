@@ -14,38 +14,14 @@ class Location(models.Model):
         return self.name
 
 
-class Participant(models.Model):
-    name = models.CharField(max_length=255)
-    email = models.EmailField()
 
-
-    def __str__(self):
-        return self.name
-    
-
-
-# Subclasses of Participant
-class Speaker(Participant):
-    expertise = models.CharField(max_length=255)
-
-
-class Attendee(Participant):
-    registration_type = models.CharField(max_length=50)
-
-
-class Organizer(Participant):
-    position = models.CharField(max_length=50)
-
-
-class Volunteer(Participant):
-    tasks = models.TextField()
 
 
 # Base Event class
 class Event(models.Model):
     tenant = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField()
     location = models.ForeignKey(Location, on_delete=models.CASCADE, related_name='events')
     description = models.TextField(max_length=1000)
     create_by = models.ForeignKey(User, related_name='events',on_delete=models.CASCADE)
@@ -71,6 +47,7 @@ class Event(models.Model):
 
     def __str__(self):
         return self.title
+
 
 class Conference(Event):
     theme = models.CharField(max_length=100)
@@ -100,6 +77,33 @@ class SocialEvent(Event):
         return "SocialEvent"
     
 
+
+    
+class Participant(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+
+
+    def __str__(self):
+        return self.name
+    
+
+
+# Subclasses of Participant
+class Speaker(Participant):
+    expertise = models.CharField(max_length=255)
+
+
+class Attendee(Participant):
+    registration_type = models.CharField(max_length=50)
+
+
+class Organizer(Participant):
+    position = models.CharField(max_length=50)
+
+
+class Volunteer(Participant):
+    tasks = models.TextField()
 
 
 class Registration(models.Model):
