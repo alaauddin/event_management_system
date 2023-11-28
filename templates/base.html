@@ -65,8 +65,8 @@
                   <img class="icon" src="{% static 'userIcon.png' %}" alt="User Icon" style="height: 50px ; width: 50px;">
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
-                  <a class="dropdown-item" href="#">My account</a>
-                  <a class="dropdown-item" href="#">Change password</a>
+                  <!-- <a class="dropdown-item" href="#">My account</a>
+                  <a class="dropdown-item" href="#">Change password</a> -->
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
                   
@@ -76,8 +76,8 @@
             </ul>
               {%else%}
               <form class="form-inline ml-auto">
-              <a href="{% url 'login' %}" class="btn btn-outline-secondary">login</a>
-              <a href="{% url 'signup' %}" class="btn btn-outline-secondary">Signup</a>
+              <a href="{% url 'login' %}" class="btn btn-outline-light mx-5">login</a>
+              <a href="{% url 'signup' %}" class="btn btn-outline-secondary">Create an Account</a>
               </form>
                   {%endif%}
       

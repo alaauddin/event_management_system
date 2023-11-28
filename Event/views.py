@@ -237,12 +237,13 @@ def completed_events(request):
 
 
 def cancelled_events(request):
-    conferences = Conference.objects.filter(status="cancelled")
-    workshops = Workshop.objects.filter(status="cancelled")
-    social_events = SocialEvent.objects.filter(status="cancelled")
+    conferences = Conference.objects.filter(status="canceled")
+    workshops = Workshop.objects.filter(status="canceled")
+    social_events = SocialEvent.objects.filter(status="canceled")
 
     # Combine all cancelled events into a single list
     all_cancelled_events = list(conferences) + list(workshops) + list(social_events)
+    
 
     context = {'events': all_cancelled_events}
     return render(request, 'cancelled_events.html', context)
@@ -505,6 +506,8 @@ def export_speakers(request, event_id):
 
 def cancel_event(request,event_id):
     event=get_object_or_404(Event, pk=event_id)
-    event.delete()
+    event.status = "canceled"
+    event.save()
+
     return redirect('events_list')
 

@@ -53,7 +53,7 @@
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" href="{% url 'edit_conference' conference_event.id %}">Edit</a>
                                     <a class="dropdown-item" href="{% url 'delete_conference' conference_event.id %}" onclick="confirmDelete()">Delete</a>
-                                    <a class="dropdown-item" href="{% url 'cancel_event' conference_event.id %}" onclick="confirmDelete()">Cancel</a>
+                          
 
                                     
                                     
@@ -63,7 +63,7 @@
                         </div>
                         <hr>
                         <h5 class="card-title">{{ conference_event.title }}</h5>
-                        <p class="card-text">{{ conference_event.display_event_details }}</p>
+                        <!-- <p class="card-text">{{ conference_event.display_event_details }}</p> -->
                         <p class="card-text">Theme: {{ conference_event.theme }}</p>
                         <p class="card-text">Date: {{ conference_event.date }}</p>
                         <p class="card-text">Location: {{ conference_event.location }}</p>
@@ -95,7 +95,7 @@
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" href="{% url 'edit_workshop' workshop_event.id %}">Edit</a>
                                     <a class="dropdown-item" href="{% url 'delete_workshop' workshop_event.id %}" onclick="confirmDelete()">Delete</a>
-                                    <a class="dropdown-item" href="{% url 'cancel_event' conference_event.id %}" onclick="confirmDelete()">Cancel</a>
+                                   
                                     
                                 </div>
                             </div>
@@ -103,7 +103,7 @@
                         </div>
                         <hr>
                         <h5 class="card-title">{{ workshop_event.title }}</h5>
-                        <p class="card-text">{{ workshop_event.display_event_details }}</p>
+                        <!-- <p class="card-text">{{ workshop_event.display_event_details }}</p> -->
                         <p class="card-text">Topic: {{ workshop_event.topic }}</p>
 
                         <!-- Add additional workshop details as needed -->
@@ -136,7 +136,7 @@
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" href="{% url 'edit_social_event' social_event.id %}">Edit</a>
                                     <a class="dropdown-item" href="{% url 'delete_social_event' social_event.id %}" onclick="confirmDelete()">Delete</a>
-                                    <a class="dropdown-item" href="{% url 'cancel_event' conference_event.id %}" onclick="confirmDelete()">Cancel</a>
+                                
                                     
                                 </div>
                             </div>
@@ -144,7 +144,7 @@
                         </div>
                         <hr>
                         <h5 class="card-title">{{ social_event.title }}</h5>
-                        <p class="card-text">{{ social_event.display_event_details }}</p>
+                        <!-- <p class="card-text">{{ social_event.display_event_details }}</p> -->
                         <p class="card-text">Activities: {{ social_event.activities }}</p>
                         <p class="card-text">Date: {{ social_event.date }}</p>
                         <p class="card-text">Location: {{ social_event.location }}</p>
