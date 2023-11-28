@@ -9,3 +9,6 @@ admin.site.register(Conference)
 admin.site.register(Workshop)
 admin.site.register(SocialEvent)
 admin.site.register(Location)
+admin.site.register(Event)
+admin.site.register(Registration)
+

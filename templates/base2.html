@@ -1,0 +1,60 @@
+{% load static %}
+
+
+
+<html lang="en">
+<head>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-RoxolCzYK/gpz/gVRRm6i5g3Rs5iUbeBji2KUtJpjvt0a+ylVyM3BQ8yPL1jYrUHnnEkXjRmVDFCCv2PFS/nLw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+      .item-image {
+          width: 200px;
+          height: 200px;
+          object-fit: cover;
+          object-position: center;
+      }
+      .category-btn {
+          display: inline-block;
+          margin-right: 10px;
+      }
+      
+  </style>
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-info">
+        <div class="container">
+           <div class="col ">
+             <div class="text-start col-md-6 text-right">
+               <a href="#"><img src ="" class="navbar-brand"></a>
+             </div>
+             <div class="text-start col-md-6 text-left ">
+                
+                 <h1><a class="navbar-brand " href="#">Events Management System</a></h1>
+               
+             </div>
+         </div>
+             
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+      
+          
+        
+    </nav>
+
+          
+
+    {% block content %}
+
+    {% endblock %}
+    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>

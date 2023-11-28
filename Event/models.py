@@ -22,6 +22,7 @@ class Event(models.Model):
     tenant = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
     date = models.DateField()
+    # date_to = models.DateField()
     location = models.ForeignKey(Location, on_delete=models.CASCADE, related_name='events')
     description = models.TextField(max_length=1000)
     create_by = models.ForeignKey(User, related_name='events',on_delete=models.CASCADE)
@@ -95,7 +96,8 @@ class Speaker(Participant):
 
 
 class Attendee(Participant):
-    registration_type = models.CharField(max_length=50)
+    phone = models.CharField(max_length=255)
+    organization = models.CharField(max_length=50)
 
 
 class Organizer(Participant):
@@ -103,6 +105,7 @@ class Organizer(Participant):
 
 
 class Volunteer(Participant):
+    phone = models.CharField(max_length=255)
     tasks = models.TextField()
 
 

@@ -1,0 +1,32 @@
+{%extends 'base2.html'%}
+
+
+{% block content %}
+      <div class="container">
+        <h1 class="text-center logo my-4">
+          <a href="#">Events Management System </a>
+        </h1>
+        <div class="row justify-content-center">
+          <div class="col-lg-8 col-md-10 col-sm-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <h3>Registeration form for {{event.title}}</h3>
+                  </div>
+                  <div class="col-auto">
+                    <!-- <a class="btn btn-primary" href="{% url 'events_list'%}">← Back</a> -->
+                  </div>
+                </div>
+                
+                <form method="post" enctype="multipart/form-data" novalidate>
+                  {% csrf_token %}
+                  {% include 'includes/form.html' %}
+                  <button type="submit" class="btn btn-primary btn-block">Register</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+{% endblock %}

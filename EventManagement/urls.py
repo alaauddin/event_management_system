@@ -46,6 +46,9 @@ urlpatterns = [
     path('edit_location/<int:location_id>/', views.edit_location, name="edit_location"),
     path('delete_location/<int:location_id>/', views.delete_location, name = "delete_location"),
 
+    path('cancel_event/<int:event_id>/', views.cancel_event, name = "cancel_event"),
+    
+
 
 
     #queries
@@ -53,6 +56,17 @@ urlpatterns = [
     path('completed_events/', views.completed_events, name = "completed_events"), 
     path('cancelled_events/', views.cancelled_events, name="cancelled_events"),
     path('create_location/', views.create_location, name = "create_location"),
+
+    path('attendee_registration/<int:event_id>/', views.attendee_registration, name='attendee_registration'),
+    path('volunteer_registration/<int:event_id>/', views.volunteer_registration, name='volunteer_registration'),
+    path('speaker_registration/<int:event_id>/', views.speaker_registration, name='speaker_registration'),
+    path('organizer_registration/<int:event_id>/', views.organizer_registration, name='organizer_registration'),
+
+
+    path('export-speakers/<int:event_id>/', views.export_speakers, name='export_speakers'),
+    path('export-attendees/<int:event_id>/', views.export_attendees, name='export_attendees'),
+    path('export-organizers/<int:event_id>/', views.export_organizers, name='export_organizers'),
+    path('export-volunteers/<int:event_id>/', views.export_volunteers, name='export_volunteers'),
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

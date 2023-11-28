@@ -53,6 +53,9 @@
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" href="{% url 'edit_conference' conference_event.id %}">Edit</a>
                                     <a class="dropdown-item" href="{% url 'delete_conference' conference_event.id %}" onclick="confirmDelete()">Delete</a>
+                                    <a class="dropdown-item" href="{% url 'cancel_event' conference_event.id %}" onclick="confirmDelete()">Cancel</a>
+
+                                    
                                     
                                 </div>
                             </div>
@@ -92,6 +95,7 @@
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" href="{% url 'edit_workshop' workshop_event.id %}">Edit</a>
                                     <a class="dropdown-item" href="{% url 'delete_workshop' workshop_event.id %}" onclick="confirmDelete()">Delete</a>
+                                    <a class="dropdown-item" href="{% url 'cancel_event' conference_event.id %}" onclick="confirmDelete()">Cancel</a>
                                     
                                 </div>
                             </div>
@@ -132,6 +136,7 @@
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" href="{% url 'edit_social_event' social_event.id %}">Edit</a>
                                     <a class="dropdown-item" href="{% url 'delete_social_event' social_event.id %}" onclick="confirmDelete()">Delete</a>
+                                    <a class="dropdown-item" href="{% url 'cancel_event' conference_event.id %}" onclick="confirmDelete()">Cancel</a>
                                     
                                 </div>
                             </div>
