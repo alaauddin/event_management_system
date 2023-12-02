@@ -6,6 +6,8 @@ from django.contrib.auth import login as auth_login
 from datetime import date
 import xlwt
 from django.http import HttpResponse
+from operator import attrgetter
+import csv
 
 def change_event_status_to_published(pk):
     try:
@@ -212,15 +214,17 @@ def delete_social_event(request, pk):
 
 
 def draft_event(request):
-    # events = Event.objects.filter(status="draft")
     conferences = Conference.objects.filter(status="draft")
     workshops = Workshop.objects.filter(status="draft")
     social_events = SocialEvent.objects.filter(status="draft")
 
     # Combine all events into a single list
-    all_events =  list(conferences) + list(workshops) + list(social_events)
+    all_events = list(conferences) + list(workshops) + list(social_events)
 
-    context = {'events': all_events}
+    # Sort events by date
+    all_events_sorted = sorted(all_events, key=attrgetter('date'))
+
+    context = {'events': all_events_sorted}
     return render(request, 'draft_events.html', context)
 
 
@@ -386,62 +390,53 @@ def organizer_registration(request, event_id):
     return render(request, 'organizer_registration.html', {'form': form, 'event': event})
 
 
+
+
 def export_attendees(request, event_id):
     # Fetch the event
     event = get_object_or_404(Event, pk=event_id)
 
-    # Create a new workbook and add a worksheet
-    workbook = xlwt.Workbook(encoding='utf-8')
-    worksheet = workbook.add_sheet('Attendees')
+    # Set response headers for CSV file download
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename={event.title}_attendees.csv'
+
+    # Create a CSV writer object with comma delimiter (you can change it to tab if needed)
+    writer = csv.writer(response, delimiter=',')
 
     # Write headers
     headers = ['Name', 'Email', 'Phone', 'Organization']
-    for col_num, header in enumerate(headers):
-        worksheet.write(0, col_num, header)
+    writer.writerow(headers)
 
     # Write attendee data
     attendees = event.registrations.filter(participant__attendee__isnull=False).select_related('participant__attendee')
-    for row_num, registration in enumerate(attendees, 1):
-        attendee = registration.participant.attendee
-        worksheet.write(row_num, 0, attendee.name)
-        worksheet.write(row_num, 1, attendee.email)
-        worksheet.write(row_num, 2, attendee.phone)
-        worksheet.write(row_num, 3, attendee.organization)
 
-    # Set response headers for Excel file download
-    response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = f'attachment; filename={event.title}_attendees.xls'
-    workbook.save(response)
+    for registration in attendees:
+        attendee = registration.participant.attendee
+        print(attendee.name, attendee.email, attendee.phone, attendee.organization)
+        writer.writerow([attendee.name, attendee.email, attendee.phone, attendee.organization])
 
     return response
-
 
 def export_volunteers(request, event_id):
     # Fetch the event
     event = get_object_or_404(Event, pk=event_id)
 
-    # Create a new workbook and add a worksheet
-    workbook = xlwt.Workbook(encoding='utf-8')
-    worksheet = workbook.add_sheet('Volunteers')
+    # Set response headers for CSV file download
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename={event.title}_volunteers.csv'
+
+    # Create a CSV writer object
+    writer = csv.writer(response)
 
     # Write headers
     headers = ['Name', 'Email', 'Phone', 'Tasks']
-    for col_num, header in enumerate(headers):
-        worksheet.write(0, col_num, header)
+    writer.writerow(headers)
 
     # Write volunteer data
     volunteers = event.registrations.filter(participant__volunteer__isnull=False).select_related('participant__volunteer')
-    for row_num, registration in enumerate(volunteers, 1):
+    for registration in volunteers:
         volunteer = registration.participant.volunteer
-        worksheet.write(row_num, 0, volunteer.name)
-        worksheet.write(row_num, 1, volunteer.email)
-        worksheet.write(row_num, 2, volunteer.phone)
-        worksheet.write(row_num, 3, volunteer.tasks)
-
-    # Set response headers for Excel file download
-    response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = f'attachment; filename={event.title}_volunteers.xls'
-    workbook.save(response)
+        writer.writerow([volunteer.name, volunteer.email, volunteer.phone, volunteer.tasks])
 
     return response
 
@@ -450,27 +445,22 @@ def export_organizers(request, event_id):
     # Fetch the event
     event = get_object_or_404(Event, pk=event_id)
 
-    # Create a new workbook and add a worksheet
-    workbook = xlwt.Workbook(encoding='utf-8')
-    worksheet = workbook.add_sheet('Organizers')
+    # Set response headers for CSV file download
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename={event.title}_organizers.csv'
+
+    # Create a CSV writer object
+    writer = csv.writer(response)
 
     # Write headers
     headers = ['Name', 'Email', 'Position']
-    for col_num, header in enumerate(headers):
-        worksheet.write(0, col_num, header)
+    writer.writerow(headers)
 
     # Write organizer data
     organizers = event.registrations.filter(participant__organizer__isnull=False).select_related('participant__organizer')
-    for row_num, registration in enumerate(organizers, 1):
+    for registration in organizers:
         organizer = registration.participant.organizer
-        worksheet.write(row_num, 0, organizer.name)
-        worksheet.write(row_num, 1, organizer.email)
-        worksheet.write(row_num, 2, organizer.position)
-
-    # Set response headers for Excel file download
-    response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = f'attachment; filename={event.title}_organizers.xls'
-    workbook.save(response)
+        writer.writerow([organizer.name, organizer.email, organizer.position])
 
     return response
 
@@ -479,27 +469,22 @@ def export_speakers(request, event_id):
     # Fetch the event
     event = get_object_or_404(Event, pk=event_id)
 
-    # Create a new workbook and add a worksheet
-    workbook = xlwt.Workbook(encoding='utf-8')
-    worksheet = workbook.add_sheet('Speakers')
+    # Set response headers for CSV file download
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename={event.title}_speakers.csv'
+
+    # Create a CSV writer object
+    writer = csv.writer(response)
 
     # Write headers
     headers = ['Name', 'Email', 'Expertise']
-    for col_num, header in enumerate(headers):
-        worksheet.write(0, col_num, header)
+    writer.writerow(headers)
 
     # Write speaker data
     speakers = event.registrations.filter(participant__speaker__isnull=False).select_related('participant__speaker')
-    for row_num, registration in enumerate(speakers, 1):
+    for registration in speakers:
         speaker = registration.participant.speaker
-        worksheet.write(row_num, 0, speaker.name)
-        worksheet.write(row_num, 1, speaker.email)
-        worksheet.write(row_num, 2, speaker.expertise)
-
-    # Set response headers for Excel file download
-    response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = f'attachment; filename={event.title}_speakers.xls'
-    workbook.save(response)
+        writer.writerow([speaker.name, speaker.email, speaker.expertise])
 
     return response
 
@@ -509,5 +494,55 @@ def cancel_event(request,event_id):
     event.status = "canceled"
     event.save()
 
-    return redirect('events_list')
+    return redirect('draft_event')
 
+
+
+def list_registered_attendees(request, event_id):
+    # Retrieve the event using the event_id
+    event = get_object_or_404(Event, pk=event_id)
+
+    # Get the list of registered attendees for the event
+    attendees = event.registrations.filter(participant__in=Attendee.objects.all())
+
+    # Render the list of attendees in a template
+    return render(
+        request,
+        'attendees_list.html',  # Replace with the actual template name
+        {'event': event, 'attendees': attendees}
+    )
+
+
+
+
+
+def list_event_speakers(request, event_id):
+    event = get_object_or_404(Event, pk=event_id)
+    speakers = event.registrations.filter(participant__in=Speaker.objects.all())
+    return render(
+        request,
+        'event_speakers_list.html',
+        {'event': event, 'speakers': speakers}
+    )
+
+
+def list_event_organizers(request, event_id):
+    event = get_object_or_404(Event, pk=event_id)
+    organizers = event.registrations.filter(participant__in=Organizer.objects.all())
+    return render(
+        request,
+        'event_organizers_list.html',
+        {'event': event, 'organizers': organizers}
+    )
+
+
+
+
+def list_event_volunteers(request, event_id):
+    event = get_object_or_404(Event, pk=event_id)
+    volunteers = event.registrations.filter(participant__in=Volunteer.objects.all())
+    return render(
+        request,
+        'event_volunteers_list.html',
+        {'event': event, 'volunteers': volunteers}
+    )

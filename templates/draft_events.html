@@ -46,7 +46,7 @@
                             </button>
                         </td>
                         <td>
-                            <a class="btn btn-danger" href="{% url 'cancel_event' event.id %}">Cancel</a>
+                            <a class="btn btn-danger" href="{% url 'cancel_event' event.id %}" onclick="confirmDelete()" >Cancel</a>
                         </td>
 
                     </tr>
@@ -139,15 +139,22 @@
                             </div>
                             <div class="dropdown">
                                 <button class="btn btn-primary dropdown-toggle" type="button" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Export Participants
+                                    Participants
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="userMenu">
-                                    <a class="dropdown-item" href="{% url 'export_speakers' event.id %}" target="_blank">Export Speakers</a>
-                                    <a class="dropdown-item" href="{% url 'export_attendees' event.id %}" target="_blank">Export Attendees</a>
-                                    <a class="dropdown-item" href="{% url 'export_organizers' event.id %}" target="_blank">Export Organizers</a>
-                                    <a class="dropdown-item" href="{% url 'export_volunteers' event.id %}" target="_blank">Export Volunteers</a>
+                                    
+                                    <a class="dropdown-item" href="{% url 'list_event_speakers' event_id=event.id %}" >Speaker</a>
+                                    <a class="dropdown-item" href="{% url 'list_registered_attendees' event_id=event.id %}" >Attendees</a>
+                                    
+                                    <a class="dropdown-item" href="{% url 'list_event_organizers' event_id=event.id %}" >Organizers</a>
+                                    
+
+                                    <a class="dropdown-item" href="{% url 'list_event_volunteers' event_id=event.id %}" >Volunteers</a>
+                                   
                                 </div>
                             </div>
+                         
+                            
                             
                             
                         </div>
@@ -237,6 +244,19 @@
         copyText.select();
         document.execCommand('copy');
         alert('Link copied to clipboard!');
+    }
+</script>
+<script>
+    function confirmDelete() {
+        var result = confirm("Are you sure you want to delete?");
+        if (result) {
+            // User clicked "OK", perform the deletion
+            // Add your delete logic here
+            alert("Deleted!"); // Placeholder for actual deletion logic
+        } else {
+            // User clicked "Cancel", do nothing
+            alert("Deletion canceled.");
+        }
     }
 </script>
 {% endblock %}

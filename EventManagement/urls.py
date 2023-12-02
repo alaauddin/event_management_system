@@ -63,6 +63,15 @@ urlpatterns = [
     path('organizer_registration/<int:event_id>/', views.organizer_registration, name='organizer_registration'),
 
 
+    path('event/<int:event_id>/attendees/', views.list_registered_attendees, name='list_registered_attendees'),
+    path('event/<int:event_id>/speakers/', views.list_event_speakers, name='list_event_speakers'),
+    path('event/<int:event_id>/organizers/', views.list_event_organizers, name='list_event_organizers'),
+    path('event/<int:event_id>/volunteers/', views.list_event_volunteers, name='list_event_volunteers'),
+
+
+
+
+
     path('export-speakers/<int:event_id>/', views.export_speakers, name='export_speakers'),
     path('export-attendees/<int:event_id>/', views.export_attendees, name='export_attendees'),
     path('export-organizers/<int:event_id>/', views.export_organizers, name='export_organizers'),

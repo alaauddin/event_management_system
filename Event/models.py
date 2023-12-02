@@ -114,9 +114,3 @@ class Registration(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='registrations')
     registration_date = models.DateTimeField(auto_now_add=True)
 
-class Agenda(models.Model):
-    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='agendas')
-    schedule = models.TextField()
-
-    def __str__(self):
-        return f"Agenda for {self.event.title}"

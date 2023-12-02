@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h2>List of Event Organizers</h2>
+    <h3>Event: {{ event.title }}</h3>
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Link to the list of registered attendees -->
+            <a href="{% url 'draft_event' %}" class="btn btn-secondary mt-3">
+                <-- Back 
+            </a>
+            <a href="{% url 'list_registered_attendees' event_id=event.id %}" class="btn btn-primary mt-3">
+                View Attendees
+            </a>
+
+            <!-- Link to the list of event speakers -->
+            <a href="{% url 'list_event_speakers' event_id=event.id %}" class="btn btn-success mt-3">
+                View Speakers
+            </a>
+
+            <!-- Link to the list of event volunteers -->
+            <a href="{% url 'list_event_volunteers' event_id=event.id %}" class="btn btn-info mt-3">
+                View Volunteers
+            </a>
+        </div>
+
+        <div class="col-md-4 text-right">
+            <!-- Export button for organizers -->
+            <a class="btn btn-primary mt-3" href="{% url 'export_organizers' event.id %}" target="_blank">Export Organizers</a>
+        </div>
+    </div>
+
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Position</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for organizer in organizers %}
+                <tr>
+                    <td>{{ organizer.participant.name }}</td>
+                    <td>{{ organizer.participant.email }}</td>
+                    <td>{{ organizer.participant.organizer.position }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
